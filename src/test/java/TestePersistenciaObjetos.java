@@ -4,6 +4,7 @@
  */
 
 import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.dao.PersistenciaJPA;
+import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.Aluno;
 import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.Contrato;
 import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.FormaPgto;
 import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.Modalidade;
@@ -65,6 +66,13 @@ public class TestePersistenciaObjetos {
          jpa.persist(p);
          jpa.persist(pct);
          
+         Aluno a = new Aluno();
+         a.setNome("Juka");
+         a.setFone("+55(54) 99999-1234");
+         a.setDataPgto(10);
+         
+         
+         jpa.persist(a);
          
      }
 }

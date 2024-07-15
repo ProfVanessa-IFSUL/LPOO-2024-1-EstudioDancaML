@@ -8,4 +8,5 @@ Este projeto foi realizado em conjunto com a disciplina de APS por meio da anál
 ## Modelagem Realizada
 A modelagem do sistema incluiu as seguintes entidades e seus relacionamentos:
 
-![Modelagem](Modelagem Estudio Danca.jpg)
+![Modelagem](img/modelagem.jpg)
+

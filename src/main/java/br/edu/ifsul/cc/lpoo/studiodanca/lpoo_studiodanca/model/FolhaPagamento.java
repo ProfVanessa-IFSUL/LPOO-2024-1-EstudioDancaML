@@ -5,6 +5,7 @@
 package br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,39 +20,44 @@ import javax.persistence.Table;
  * @author vanessalagomachado
  */
 @Entity
-@Table(name="tb_modalidade")
-public class Modalidade implements Serializable {
+@Table(name = "tb_folha_pagamento")
+public class FolhaPagamento implements Serializable{
     @Id
+    @Column(name = "folha_pgto_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "modalidade_id")
-    private Integer id;
+    private int id;
     
-    @Column(nullable = false, length = 155, name = "modalidade_descricao")
-    private String descricao;
-
+    @Column(name = "folha_pgto_data_pgto")
+    private Calendar dataPgto;
+    
+    @Column(name="folha_pgto_valor")
+    private double valorReceber;
+    
+    
     //    Validação do Mapeamento Bidirecional: Garantir que o mapeamento @OneToMany em Professor 
-//    e @ManyToOne em Modalidade estejam corretamente configurados para refletir o relacionamento bidirecional.
+//    e @ManyToOne em FolhaPagamento estejam corretamente configurados para refletir o relacionamento bidirecional.
     @ManyToOne
-    @JoinColumn(name="modalidade_professor")
+    @JoinColumn(name="folha_pgto_professor")
     private Professor professor;
-    
-    public Integer getId() {
-        return id;
+
+    public Calendar getDataPgto() {
+        return dataPgto;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setDataPgto(Calendar dataPgto) {
+        this.dataPgto = dataPgto;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public double getValorReceber() {
+        return valorReceber;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setValorReceber(double valorReceber) {
+        this.valorReceber = valorReceber;
     }
     
+    public void calcularFolhaMes(){
     
-    
+    }
     
 }

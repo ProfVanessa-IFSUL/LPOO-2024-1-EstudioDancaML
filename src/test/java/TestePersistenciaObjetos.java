@@ -6,10 +6,12 @@
 import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.dao.PersistenciaJPA;
 import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.Aluno;
 import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.Contrato;
+import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.FolhaPagamento;
 import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.FormaPgto;
 import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.Modalidade;
 import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.Pacote;
 import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.Pagamento;
+import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.Professor;
 import java.util.Calendar;
 import org.junit.After;
 import org.junit.Before;
@@ -51,20 +53,12 @@ public class TestePersistenciaObjetos {
          pct.setValor(100);
          pct.setModalidade(m);
          
-         Contrato c = new Contrato();
-         c.setValor(20.678);
-         c.setForma_pgto(FormaPgto.PIX);
-         
-         Pagamento p = new Pagamento();
-         p.setValor(200.00);
-         p.setDataVcto(Calendar.getInstance());
-         p.setContrato(c);
          
          
-         jpa.persist(c);
-         jpa.persist(m);
-         jpa.persist(p);
-         jpa.persist(pct);
+         
+         
+         
+         
          
          Aluno a = new Aluno();
          a.setNome("Juka");
@@ -72,7 +66,39 @@ public class TestePersistenciaObjetos {
          a.setDataPgto(10);
          
          
-         jpa.persist(a);
+         Contrato c = new Contrato();
+         c.setValor(20.678);
+         c.setForma_pgto(FormaPgto.PIX);
+         c.setAluno(a);
          
+         Pagamento p = new Pagamento();
+         p.setValor(200.00);
+         p.setDataVcto(Calendar.getInstance());
+         p.setContrato(c);
+        
+         Professor prof1 = new Professor();
+         prof1.setNome("Joao da Silva");
+         prof1.setFone("+55(54)90123-1233");
+         prof1.setDataAdmissao(Calendar.getInstance());
+         
+         
+         FolhaPagamento f = new FolhaPagamento();
+         f.setDataPgto(Calendar.getInstance());
+         f.setValorReceber(5000);
+         
+         prof1.addFolhaPagamentoMes(f);
+         prof1.addModalidade(m);
+         
+//         Persistir Entidades em Ordem Correta para evitar violações de restrições.
+         
+         jpa.persist(prof1);
+         jpa.persist(a);
+         jpa.persist(f);
+         jpa.persist(m);
+         
+         jpa.persist(c);
+         
+         jpa.persist(p);
+         jpa.persist(pct);
      }
 }

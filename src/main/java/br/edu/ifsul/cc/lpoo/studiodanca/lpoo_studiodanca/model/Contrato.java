@@ -12,6 +12,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -39,7 +41,13 @@ public class Contrato {
     // como inteiro referente ao índice do valor informado no Enum
     // outra opção que podemos usar é o tipo EnumType.STRING
     private FormaPgto forma_pgto;
-
+    
+    
+    @OneToOne
+    @JoinColumn(name="contrato_aluno")
+    private Aluno aluno;
+    
+    
     public Contrato() {
         dataInicio = Calendar.getInstance();
     }
@@ -77,6 +85,16 @@ public class Contrato {
     public void setForma_pgto(FormaPgto forma_pgto) {
         this.forma_pgto = forma_pgto;
     }
+
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
+    }
+    
+    
     
     
 }

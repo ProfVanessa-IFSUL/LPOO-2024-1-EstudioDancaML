@@ -4,12 +4,16 @@
  */
 package br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -36,9 +40,16 @@ public class Pacote {
     @JoinColumn(name = "modalidade_id")
     private Modalidade modalidade;
     
-    
+    @ManyToMany(mappedBy = "pacotes")
+    private List<Contrato> contratos = new ArrayList<>();
+
+    public Pacote() {
+        
+    }
     
 
+    
+    
     public int getId() {
         return id;
     }
@@ -69,6 +80,14 @@ public class Pacote {
 
     public void setModalidade(Modalidade modalidade) {
         this.modalidade = modalidade;
+    }
+
+    public List<Contrato> getContratos() {
+        return contratos;
+    }
+    
+    public void addContrato(Contrato c) {
+        contratos.add(c);
     }
     
     

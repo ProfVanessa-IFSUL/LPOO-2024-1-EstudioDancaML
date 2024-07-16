@@ -24,7 +24,7 @@ public class Professor extends Pessoa implements Serializable {
     public Professor() {
 //         inicialização das listas holerites e modalidades no construtor para evitar NullPointerException
         holerites = new ArrayList<>();
-        modalidades = new ArrayList<>();
+//        modalidades = new ArrayList<>();
 
     }
 
@@ -35,13 +35,13 @@ public class Professor extends Pessoa implements Serializable {
 //    Validação do Mapeamento Bidirecional: Garantir que o mapeamento @OneToMany em Professor 
 //    e @ManyToOne em FolhaPagamento estejam corretamente configurados para refletir o relacionamento bidirecional.
     @OneToMany(mappedBy = "professor")
-    private List<FolhaPagamento> holerites;
+    private List<FolhaPagamento> holerites= new ArrayList<>();
     
     
     //    Validação do Mapeamento Bidirecional: Garantir que o mapeamento @OneToMany em Professor 
 //    e @ManyToOne em Modalidade estejam corretamente configurados para refletir o relacionamento bidirecional.
     @OneToMany(mappedBy = "professor")
-    private List<Modalidade> modalidades;
+    private List<Modalidade> modalidades = new ArrayList<>();
 
     public Calendar getDataAdmissao() {
         return dataAdmissao;

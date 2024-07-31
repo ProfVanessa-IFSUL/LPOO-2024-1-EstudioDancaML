@@ -84,6 +84,13 @@ public abstract class Pessoa implements Serializable {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
+    
+    
     
     
     

@@ -14,14 +14,14 @@ import javax.swing.JOptionPane;
  *
  * @author vanessalagomachado
  */
-public class TelaModalidades extends javax.swing.JFrame {
+public class TelaModalidadesFinal extends javax.swing.JFrame {
 
     PersistenciaJPA jpa;
 
     /**
      * Creates new form TelaModalidades
      */
-    public TelaModalidades() {
+    public TelaModalidadesFinal() {
         initComponents();
 //        jpa = new PersistenciaJPA();
         listarModalidades();
@@ -136,14 +136,10 @@ public class TelaModalidades extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        Modalidade m = new Modalidade();
-        m.setDescricao(JOptionPane.showInputDialog("Informe a descrição da modalidade:"));
-
-        jpa = new PersistenciaJPA();
-        jpa.conexaoAberta();
-        jpa.persist(m);
-        jpa.fecharConexao();
-
+        TelaCadastroModalidade telaCadastro = new TelaCadastroModalidade(this, true);
+        
+        telaCadastro.setVisible(true);
+        
         listarModalidades();
     }//GEN-LAST:event_btnNovoActionPerformed
 
@@ -177,27 +173,15 @@ public class TelaModalidades extends javax.swing.JFrame {
         Modalidade modalidadeSelecionada
                 = lstModalidades.getSelectedValue();
         if (modalidadeSelecionada != null) {
+            
+            // Edição da Modalidade em Tela de Cadastro
+            TelaCadastroModalidade telaCadastro = new TelaCadastroModalidade(this, true);
+            
+// FALTA ENVIAR MODALIDADE SELECIONADA PARA TELA DE CADASTRO
 
-            try {
-                jpa = new PersistenciaJPA();
-                jpa.conexaoAberta();
+            telaCadastro.setVisible(true);
 
-                Modalidade modalidadePersistido
-                        = (Modalidade) jpa.find(Modalidade.class,
-                                modalidadeSelecionada.getId());
-                modalidadePersistido.setDescricao(
-                        JOptionPane.showInputDialog(rootPane,
-                                "Informe a descrição da modalidade: ",
-                                modalidadeSelecionada.getDescricao()));
-                jpa.persist(modalidadePersistido);
-                jpa.fecharConexao();
-                listarModalidades();
-
-            } catch (Exception e) {
-                System.err.println("Erro ao editar modalidade: " + e.getMessage());
-            } finally {
-                jpa.fecharConexao();
-            }
+            listarModalidades();
 
         }
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -219,20 +203,21 @@ public class TelaModalidades extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaModalidades.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaModalidadesFinal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaModalidades.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaModalidadesFinal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaModalidades.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaModalidadesFinal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaModalidades.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaModalidadesFinal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaModalidades().setVisible(true);
+                new TelaModalidadesFinal().setVisible(true);
             }
         });
     }

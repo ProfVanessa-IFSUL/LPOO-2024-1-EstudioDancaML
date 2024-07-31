@@ -4,18 +4,37 @@
  */
 package br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.view;
 
+import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.dao.PersistenciaJPA;
+import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.Modalidade;
+import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.Professor;
+import java.util.List;
+
 /**
  *
  * @author vanessalagomachado
  */
 public class TelaCadastroModalidade extends javax.swing.JDialog {
-
+    private Modalidade modalidade;
+    PersistenciaJPA jpa;
     /**
      * Creates new form TelaCadastroModalidade
      */
     public TelaCadastroModalidade(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        listarProfessores();
+    }
+    
+    public void listarProfessores(){
+        cmbProfessores.removeAllItems();
+        jpa = new PersistenciaJPA();
+        jpa.conexaoAberta();
+        List<Professor> lista = jpa.getProfessores();
+        for(Professor o: lista){
+            cmbProfessores.addItem(o);
+        }
+        jpa.fecharConexao();
+        
     }
 
     /**
@@ -43,8 +62,6 @@ public class TelaCadastroModalidade extends javax.swing.JDialog {
 
         jLabel3.setText("Professor:");
 
-        cmbProfessores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -53,6 +70,11 @@ public class TelaCadastroModalidade extends javax.swing.JDialog {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,8 +124,26 @@ public class TelaCadastroModalidade extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
+        // Criando nova modalidade
+       if(modalidade == null){
+           modalidade = new Modalidade();
+           modalidade.setDescricao(txtDescricao.getText());
+           modalidade.setProfessor((Professor)cmbProfessores.getSelectedItem());
+           
+           jpa = new PersistenciaJPA();
+            jpa.conexaoAberta();
+            jpa.persist(modalidade);
+            jpa.fecharConexao();
+            dispose();
+           
+       } else {
+           // Edição da modalidade -- Atividade para dia 07-08
+       }
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,13 +187,23 @@ public class TelaCadastroModalidade extends javax.swing.JDialog {
         });
     }
 
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> cmbProfessores;
+    private javax.swing.JComboBox<Professor> cmbProfessores;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField txtDescricao;
     // End of variables declaration//GEN-END:variables
+
+    public Modalidade getModalidade() {
+        return modalidade;
+    }
+
+    public void setModalidade(Modalidade modalidade) {
+        this.modalidade = modalidade;
+    }
 }

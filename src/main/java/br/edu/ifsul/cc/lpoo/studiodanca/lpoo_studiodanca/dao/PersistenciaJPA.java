@@ -5,6 +5,7 @@
 package br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.dao;
 
 import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.Modalidade;
+import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.Professor;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -22,7 +23,7 @@ public class PersistenciaJPA implements InterfacePersistencia {
 
     public PersistenciaJPA() {
         //parametro: é o nome da unidade de persistencia (Persistence Unit)
-        factory = Persistence.createEntityManagerFactory("pu_sistema_compras");
+        factory = Persistence.createEntityManagerFactory("pu_studio_danca");
         //conecta no bd e executa a estratégia de geração.
         entity = factory.createEntityManager();
     }
@@ -96,6 +97,19 @@ public class PersistenciaJPA implements InterfacePersistencia {
         try {
             TypedQuery<Modalidade> query = 
                     em.createQuery("SELECT m FROM Modalidade m", Modalidade.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public List<Professor> getProfessores() {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Professor> query = 
+                    em.createQuery("SELECT m FROM Professor m", 
+                            Professor.class);
             return query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();

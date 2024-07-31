@@ -66,6 +66,10 @@ public class Professor extends Pessoa implements Serializable {
 
     public void addModalidade(Modalidade m) {
         modalidades.add(m);
+        m.setProfessor(this);
+       
     }
+    
+    
 
 }

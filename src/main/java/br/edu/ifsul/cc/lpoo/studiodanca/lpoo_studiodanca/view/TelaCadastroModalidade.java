@@ -8,6 +8,7 @@ import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.dao.PersistenciaJPA;
 import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.Modalidade;
 import br.edu.ifsul.cc.lpoo.studiodanca.lpoo_studiodanca.model.Professor;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -134,11 +135,28 @@ public class TelaCadastroModalidade extends javax.swing.JDialog {
             jpa.conexaoAberta();
             jpa.persist(modalidade);
             jpa.fecharConexao();
-            dispose();
+            
            
        } else {
            // Edição da modalidade -- Atividade para dia 07-08
+           try{
+            jpa = new PersistenciaJPA();
+           
+            jpa.conexaoAberta();
+           Modalidade modalidadeEdt = (Modalidade)jpa.find(Modalidade.class, modalidade.getId());
+           modalidadeEdt.setDescricao(txtDescricao.getText());
+           modalidadeEdt.setProfessor((Professor)cmbProfessores.getSelectedItem());
+           
+           
+           jpa.persist(modalidadeEdt);
+           jpa.fecharConexao();
+           } catch (Exception e){
+               JOptionPane.showMessageDialog(rootPane, "Erro ao editar Modalidade: "+e.getMessage());
+           } finally{
+               jpa.fecharConexao();
+           }
        }
+       dispose();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -205,5 +223,8 @@ public class TelaCadastroModalidade extends javax.swing.JDialog {
 
     public void setModalidade(Modalidade modalidade) {
         this.modalidade = modalidade;
+        txtDescricao.setText(modalidade.getDescricao());
+        cmbProfessores.setSelectedItem((Professor) modalidade.getProfessor());
+        
     }
 }

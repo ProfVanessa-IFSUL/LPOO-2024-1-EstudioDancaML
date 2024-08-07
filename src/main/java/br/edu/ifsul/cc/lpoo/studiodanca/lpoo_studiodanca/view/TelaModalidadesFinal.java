@@ -58,6 +58,8 @@ public class TelaModalidadesFinal extends javax.swing.JFrame {
         btnNovo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnRemover = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtDescricaoBusca = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,6 +111,17 @@ public class TelaModalidadesFinal extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
+        jLabel2.setText("Descrição:");
+
+        txtDescricaoBusca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDescricaoBuscaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDescricaoBuscaKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -116,6 +129,10 @@ public class TelaModalidadesFinal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDescricaoBusca))
                     .addComponent(jLabel1)
                     .addComponent(jScrollPane1)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -124,9 +141,13 @@ public class TelaModalidadesFinal extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtDescricaoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -178,6 +199,8 @@ public class TelaModalidadesFinal extends javax.swing.JFrame {
             TelaCadastroModalidade telaCadastro = new TelaCadastroModalidade(this, true);
             
 // FALTA ENVIAR MODALIDADE SELECIONADA PARA TELA DE CADASTRO
+            telaCadastro.setModalidade(modalidadeSelecionada);
+            
 
             telaCadastro.setVisible(true);
 
@@ -185,6 +208,36 @@ public class TelaModalidadesFinal extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void txtDescricaoBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescricaoBuscaKeyTyped
+        // TODO add your handling code here:
+        
+        
+        
+    }//GEN-LAST:event_txtDescricaoBuscaKeyTyped
+
+    private void txtDescricaoBuscaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescricaoBuscaKeyReleased
+        String textoBusca = txtDescricaoBusca.getText().trim();
+        System.out.println("Texto Busca: "+textoBusca);
+        if(textoBusca.isEmpty()){
+            listarModalidades();
+            return;
+        }
+        
+        
+        lstModalidades.clearSelection();
+        jpa = new PersistenciaJPA();
+        jpa.conexaoAberta();
+        
+        List<Modalidade> lista = jpa.getModalidades(textoBusca);
+        System.out.println("Lista: " + lista);
+        DefaultListModel modeloLista = new DefaultListModel<>();
+        for (Modalidade m : lista) {
+            modeloLista.addElement(m);
+        }
+        lstModalidades.setModel(modeloLista);
+        jpa.fecharConexao();
+    }//GEN-LAST:event_txtDescricaoBuscaKeyReleased
 
     /**
      * @param args the command line arguments
@@ -227,8 +280,10 @@ public class TelaModalidadesFinal extends javax.swing.JFrame {
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnRemover;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<Modalidade> lstModalidades;
+    private javax.swing.JTextField txtDescricaoBusca;
     // End of variables declaration//GEN-END:variables
 }
